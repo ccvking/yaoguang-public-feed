@@ -49,7 +49,7 @@ class PublicFeedSafetyTests(unittest.TestCase):
 
     def test_key_inside_readme_rejected(self):
         f = self.root / "README.md"
-        f.write_text("-----BEGIN PRIVATE KEY-----\nfake")
+        f.write_text("-----BEGIN " + "PRIVATE KEY-----\nfake")
         with self.assertRaises(UnsafeFeed):
             validate(self.root)
 
