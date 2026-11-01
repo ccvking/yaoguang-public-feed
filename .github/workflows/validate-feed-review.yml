@@ -1,0 +1,23 @@
+name: Yaoguang public feed safety gate (read-only)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  locked-feed-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Reject unsigned feed, extra files, secrets, and cross-game status
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_feed_before_release.py' -v
+          python3 scripts/validate_feed_before_release.py
