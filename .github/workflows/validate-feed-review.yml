@@ -9,6 +9,8 @@ jobs:
   locked-feed-review:
     runs-on: ubuntu-24.04
     timeout-minutes: 4
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
